@@ -1,4 +1,4 @@
-# ppt
+# PPT 2.0
 Perfect Pitch Trainer based on David Lucas Burge
 
 # Installation
