@@ -20,11 +20,19 @@ python setup.py install
 ```
 and then in projects root folder run
 
+# Usage
+
+## Staring
+
 ```bash
 python3 main.py
 ```
+## Playback
 
-# Usage
+Use something like Pianoteq and turn on use "listen to all midi ports"
+
+## Commands
+
 - use `q` to exit practice and program
 - use `?` inside practice to show the right tone
 - use `r` to repet or listen again
