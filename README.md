@@ -1,9 +1,9 @@
 # PPT 2.0
 Perfect Pitch Trainer based on David Lucas Burge
 
-# Installation
+## Installation
 
-## On ubuntu:
+### On ubuntu:
 
 ```bash
 sudo apt-get install python3
@@ -20,18 +20,18 @@ python setup.py install
 ```
 and then in projects root folder run
 
-# Usage
+## Usage
 
-## Staring
+### Staring
 
 ```bash
 python3 main.py
 ```
-## Playback
+### Playback
 
 Use something like Pianoteq and turn on use "listen to all midi ports"
 
-## Commands
+### Commands
 
 - use `q` to exit practice and program
 - use `?` inside practice to show the right tone
