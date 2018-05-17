@@ -22,7 +22,7 @@ and then in projects root folder run
 
 ## Usage
 
-### Staring
+### Starting
 
 ```bash
 python3 main.py
