@@ -3,7 +3,13 @@
 import pickle
 import sys
 from pathlib import Path
+import colors
+
 import practiceTest
+import masterClass17_01
+
+practices = [practiceTest.PracticeTest(),
+             masterClass17_01.Practice()]
 
 statusFile = Path('ppt.pickle')
 
@@ -25,11 +31,24 @@ def loadStatus(practices):
                         practice.CURRENT_HITS = status[1]
 
 if __name__ == "__main__":
-    practices = [practiceTest.PracticeTest()]
+    print("Welcome")
     loadStatus(practices)
     while True:
         for enum, practice in enumerate(practices):
-            print(str(enum) + ":", practice.NAME, str(practice.CURRENT_HITS) + "/" + str(practice.MAX_HITS))
+            string = str(enum)
+            string += " : "
+            string += colors.preColor + colors.colorsForeground["RTT_CTRL_TEXT_BRIGHT_GREEN"]
+            string += practice.NAME
+            string += colors.preColor + colors.colorsCommands["RTT_CTRL_RESET"]
+            string += " - "
+            string += colors.preColor + colors.colorsForeground["RTT_CTRL_TEXT_BRIGHT_MAGENTA"]
+            string += practice.DESCRIPTION
+            string += colors.preColor + colors.colorsCommands["RTT_CTRL_RESET"]
+            string += " - "
+            string += colors.preColor + colors.colorsForeground["RTT_CTRL_TEXT_BRIGHT_BLUE"]
+            string += str(practice.CURRENT_HITS) + "/" + str(practice.MAX_HITS)
+            string += colors.preColor + colors.colorsCommands["RTT_CTRL_RESET"]
+            print(string)
         practice = input("Select practice: ")
         if practice == "q":
             break

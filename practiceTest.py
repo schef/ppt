@@ -7,6 +7,7 @@ import pitchParser
 
 class PracticeTest:
     NAME = "Practice test"
+    DESCRIPTION = "This is only a example"
     UUID = "dc9c215d-586f-492f-8f1f-3ecda45c56da"
     MAX_HITS = 5
     CURRENT_HITS = 0
@@ -30,7 +31,6 @@ class PracticeTest:
 
     def __init__(self):
         self.generateNewChallenge()
-        print("Welcome")
         time.sleep(1)
 
     def playChords(self):
@@ -47,7 +47,7 @@ class PracticeTest:
 
     def main(self):
 
-        while self.hits <= self.MAX_HITS:
+        while self.hits < self.MAX_HITS:
 
             self.playChords()
             self.playNote()
