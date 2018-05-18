@@ -25,8 +25,9 @@ class MidiPlayer():
         self.noteOn(note)
         Timer(self.NOTE_DURATION, self.noteOff, [note]).start()
 
-    def playMultipleNotesMelodicly(self, notes):
+    def playMultipleNotesMelodicly(self, originalNotes):
         # print("playMultipleNotesMelodicly", notes)
+        notes = list(originalNotes)
         note = notes.pop(0)
         self.noteOn(note)
         Timer(self.NOTE_DURATION, self.noteOff, [note]).start()

@@ -4,12 +4,24 @@ import pickle
 import sys
 from pathlib import Path
 import colors
+import time
 
 import practiceTest
-import masterClass17_01
+import masterClass05
+import masterClass17
 
 practices = [practiceTest.PracticeTest(),
-             masterClass17_01.Practice()]
+             masterClass05.Practice0501(),
+             masterClass17.Practice1701(),
+             masterClass17.Practice1702(),
+             masterClass17.Practice170301(),
+             masterClass17.Practice170302(),
+             masterClass17.Practice1704(),
+             ]
+
+nameWidthGroup = 0
+nameWidthPractice = 0
+nameWidthDescription = 0
 
 statusFile = Path('ppt.pickle')
 
@@ -30,25 +42,64 @@ def loadStatus(practices):
                     if status[0] == practice.UUID:
                         practice.CURRENT_HITS = status[1]
 
+def getColoredText(text, colorText, colorBg=""):
+    string = colors.preColor + colors.colorsForeground[colorText]
+    if colorBg:
+        string += colors.preColor + colors.colorsBackground[colorBg]
+    string += text
+    string += colors.preColor + colors.colorsCommands["RESET"]
+    return string
+
+
+def printPractice(enum, practice):
+    string = str(enum)
+    string += " : "
+    nameGroup = practice.GROUP
+    if len(nameGroup) < nameWidthGroup:
+        nameGroup += (nameWidthGroup - len(nameGroup)) * " "
+    string += getColoredText(nameGroup, "GREEN")
+    string += " : "
+    namePractice = practice.PRACTICE
+    if len(namePractice) < nameWidthPractice:
+        namePractice += (nameWidthPractice - len(namePractice)) * " "
+    string += getColoredText(namePractice, "MAGENTA")
+    string += " : "
+    nameDescription = practice.DESCRIPTION
+    if len(nameDescription) < nameWidthDescription:
+        nameDescription += (nameWidthDescription - len(nameDescription)) * " "
+    string += getColoredText(nameDescription, "CYAN")
+    string += " : "
+    hitsString = str(practice.CURRENT_HITS) + "/" + str(practice.MAX_HITS)
+    if (practice.CURRENT_HITS == 0):
+        string += getColoredText(hitsString, "BRIGHT_BLUE")
+    elif (practice.CURRENT_HITS / practice.MAX_HITS) < 0.5:
+        string += getColoredText(hitsString, "BRIGHT_CYAN")
+    elif (practice.CURRENT_HITS / practice.MAX_HITS) >= 0.5 and (practice.CURRENT_HITS / practice.MAX_HITS) < 1.0:
+        string += getColoredText(hitsString, "BRIGHT_YELLOW")
+    else:
+        string += getColoredText(hitsString, "BRIGHT_GREEN")
+    print(string)
+
+def getNameWidth():
+    for practice in practices:
+        global nameWidthGroup, nameWidthPractice, nameWidthDescription
+        if len(practice.GROUP) > nameWidthGroup:
+            nameWidthGroup = len(practice.GROUP)
+        if len(practice.PRACTICE) > nameWidthPractice:
+            nameWidthPractice = len(practice.PRACTICE)
+        if len(practice.DESCRIPTION) > nameWidthDescription:
+            nameWidthDescription = len(practice.DESCRIPTION)
+
+def init():
+    loadStatus(practices)
+    getNameWidth()
+
 if __name__ == "__main__":
     print("Welcome")
-    loadStatus(practices)
+    init()
     while True:
         for enum, practice in enumerate(practices):
-            string = str(enum)
-            string += " : "
-            string += colors.preColor + colors.colorsForeground["RTT_CTRL_TEXT_BRIGHT_GREEN"]
-            string += practice.NAME
-            string += colors.preColor + colors.colorsCommands["RTT_CTRL_RESET"]
-            string += " - "
-            string += colors.preColor + colors.colorsForeground["RTT_CTRL_TEXT_BRIGHT_MAGENTA"]
-            string += practice.DESCRIPTION
-            string += colors.preColor + colors.colorsCommands["RTT_CTRL_RESET"]
-            string += " - "
-            string += colors.preColor + colors.colorsForeground["RTT_CTRL_TEXT_BRIGHT_BLUE"]
-            string += str(practice.CURRENT_HITS) + "/" + str(practice.MAX_HITS)
-            string += colors.preColor + colors.colorsCommands["RTT_CTRL_RESET"]
-            print(string)
+            printPractice(enum, practice)
         practice = input("Select practice: ")
         if practice == "q":
             break

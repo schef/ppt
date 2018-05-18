@@ -6,7 +6,8 @@ import pitchParser
 
 
 class PracticeTest:
-    NAME = "Practice test"
+    GROUP = "Practice test"
+    PRACTICE = "test"
     DESCRIPTION = "This is only a example"
     UUID = "dc9c215d-586f-492f-8f1f-3ecda45c56da"
     MAX_HITS = 5
@@ -31,7 +32,6 @@ class PracticeTest:
 
     def __init__(self):
         self.generateNewChallenge()
-        time.sleep(1)
 
     def playChords(self):
         self.player.playMultipleNotesHarmonicly(self.randomChord)
