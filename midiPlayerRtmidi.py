@@ -1,27 +1,24 @@
 from threading import Timer
-from androidhelper import Android
+
+from rtmidi.midiconstants import NOTE_ON, NOTE_OFF, CONTROLLER_CHANGE, ALL_NOTES_OFF
+from rtmidi.midiutil import open_midioutput
 
 class MidiPlayer():
     NOTE_DURATION = 1
     CLIENT_NAME = "ppt"
     PORT_NAME = "Output"
-    PRENAME = "/mnt/sdcard/rar/ppt/ppt/ogg/"
-    POSTNAME = ".ogg"
 
     def __init__(self):
-        self.midiout_notes = Android()
-        for i in range(21, 108 + 1):
-            self.midiout_notes.mediaPlay(self.PRENAME + str(i) + self.POSTNAME, str(i), False)
+        self.midiout_notes, self.port_name = open_midioutput(use_virtual=True, client_name=self.CLIENT_NAME,
+                                                             port_name=self.PORT_NAME)
 
     def noteOn(self, note):
         # print("noteOn", note)
-        self.midiout_notes.mediaPlayStart(str(note))
+        self.midiout_notes.send_message([NOTE_ON, note, 100])
 
     def noteOff(self, note):
         # print("noteOff", note)
-        self.midiout_notes.mediaPlayPause(str(note))
-        self.midiout_notes.mediaPlaySeek(0, str(note))
-
+        self.midiout_notes.send_message([NOTE_OFF, note, 0])
 
     def playSingleNote(self, note):
         # print("playSingleNote", note)
@@ -44,5 +41,4 @@ class MidiPlayer():
             Timer(self.NOTE_DURATION, self.noteOff, [note]).start()
 
     def allNotesOff(self):
-        for i in self.midiout_notes.mediaPlayList():
-            self.midiout_notes.mediaPlayClose(i)
+        self.midiout_notes.send_message([CONTROLLER_CHANGE, ALL_NOTES_OFF, 0])
