@@ -17,7 +17,7 @@ class MidiPlayer():
 
     def noteOff(self, note):
         # print("noteOff", note)
-        self.midiout_notes.mediaPlayClose(self.PRENAME + str(note) + self.POSTNAME, str(note))
+        self.midiout_notes.mediaPlayClose(str(note))
 
     def playSingleNote(self, note):
         # print("playSingleNote", note)
