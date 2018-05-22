@@ -5,7 +5,7 @@ class MidiPlayer():
     NOTE_DURATION = 1
     CLIENT_NAME = "ppt"
     PORT_NAME = "Output"
-    PRENAME = "/mnt/sdcard/qpython/projects3/ppt/ogg"
+    PRENAME = "/storage/emulated/0/qpython/projects3/ppt/ogg"
     POSTNAME = ".ogg"
 
     def __init__(self):
