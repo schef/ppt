@@ -2,7 +2,7 @@
 
 import pickle
 import sys
-from pathlib import Path
+import os
 import colors
 import time
 
@@ -23,8 +23,7 @@ nameWidthGroup = 0
 nameWidthPractice = 0
 nameWidthDescription = 0
 
-statusFile = Path('ppt.pickle')
-
+statusFile = os.path.dirname(os.path.realpath(__file__)) + 'ppt.pickle'
 def saveStatus(practices):
     with open(statusFile, 'wb') as handle:
         statusList = []
@@ -34,7 +33,7 @@ def saveStatus(practices):
 
 
 def loadStatus(practices):
-    if statusFile.is_file():
+    if os.path.isfile(statusFile):
         with open(statusFile, 'rb') as handle:
             statusList = pickle.load(handle)
             for status in statusList:
