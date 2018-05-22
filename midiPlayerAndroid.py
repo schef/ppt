@@ -20,6 +20,8 @@ class MidiPlayer():
     def noteOff(self, note):
         # print("noteOff", note)
         self.midiout_notes.mediaPlayPause(str(note))
+        self.midiout_notes.mediaPlaySeek(0, str(note))
+
 
     def playSingleNote(self, note):
         # print("playSingleNote", note)
