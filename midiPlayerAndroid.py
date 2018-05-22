@@ -10,14 +10,16 @@ class MidiPlayer():
 
     def __init__(self):
         self.midiout_notes = Android()
+        for i in range(21, 108 + 1):
+            self.midiout_notes.mediaPlay(self.PRENAME + str(i) + self.POSTNAME, str(i), False)
 
     def noteOn(self, note):
         # print("noteOn", note)
-        self.midiout_notes.mediaPlay(self.PRENAME + str(note) + self.POSTNAME, str(note))
+        self.midiout_notes.mediaPlayStart(str(note))
 
     def noteOff(self, note):
         # print("noteOff", note)
-        self.midiout_notes.mediaPlayClose(str(note))
+        self.midiout_notes.mediaPlayPause(str(note))
 
     def playSingleNote(self, note):
         # print("playSingleNote", note)
