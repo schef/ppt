@@ -62,7 +62,7 @@ class Practice1701:
                 notes = guessNote.split()
                 if (len(notes) != 2):
                     print("Syntax error: write two pitches")
-                elif (notes not in list(self.parser.pitchMidiBase.keys())):
+                elif (notes[0] not in list(self.parser.pitchMidiBase.keys()) or notes[1] not in list(self.parser.pitchMidiBase.keys())):
                     print("Syntax error: written pitch does not exist")
                 elif (self.parser.get_midi_from_pitch(notes[0]) % 12 == self.randomNotes[0] % 12 and
                       self.parser.get_midi_from_pitch(notes[1]) % 12 == self.randomNotes[1] % 12):
@@ -185,8 +185,13 @@ class Practice170301:
                 break
             elif (guessNote == "r"):
                 pass
+            elif (guessNote == "m"):
+                self.hits += 0
+                print("Bad, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
+                self.generateNewChallenge()
             elif (guessNote == "n"):
-                print("Next.")
+                self.hits +=1
+                print("Good, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
                 self.generateNewChallenge()
 
         print("Finish successfully")
