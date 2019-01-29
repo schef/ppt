@@ -21,24 +21,24 @@ class MidiPlayer():
         self.midiout_notes.send_message([NOTE_OFF, note, 0])
 
     def playSingleNote(self, note):
-        # print("playSingleNote", note)
-        self.noteOn(note)
-        Timer(self.NOTE_DURATION, self.noteOff, [note]).start()
+        print("playSingleNote", note)
+        # self.noteOn(note)
+        # Timer(self.NOTE_DURATION, self.noteOff, [note]).start()
 
     def playMultipleNotesMelodicly(self, originalNotes):
-        # print("playMultipleNotesMelodicly", notes)
-        notes = list(originalNotes)
-        note = notes.pop(0)
-        self.noteOn(note)
-        Timer(self.NOTE_DURATION, self.noteOff, [note]).start()
-        if len(notes) > 0:
-            Timer(self.NOTE_DURATION, self.playMultipleNotesMelodicly, [notes]).start()
+        print("playMultipleNotesMelodicly", originalNotes)
+        # notes = list(originalNotes)
+        # note = notes.pop(0)
+        # self.noteOn(note)
+        # Timer(self.NOTE_DURATION, self.noteOff, [note]).start()
+        # if len(notes) > 0:
+            # Timer(self.NOTE_DURATION, self.playMultipleNotesMelodicly, [notes]).start()
 
     def playMultipleNotesHarmonicly(self, notes):
-        # print("playMultipleNotesHarmonicly", notes)
-        for note in notes:
-            self.noteOn(note)
-            Timer(self.NOTE_DURATION, self.noteOff, [note]).start()
+        print("playMultipleNotesHarmonicly", notes)
+        # for note in notes:
+            # self.noteOn(note)
+            # Timer(self.NOTE_DURATION, self.noteOff, [note]).start()
 
     def allNotesOff(self):
         self.midiout_notes.send_message([CONTROLLER_CHANGE, ALL_NOTES_OFF, 0])
