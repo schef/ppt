@@ -1,6 +1,5 @@
 import re
 
-
 class PitchParser:
     MIDI_BASE = 48
     pitchMidiBase = {
