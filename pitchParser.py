@@ -29,6 +29,10 @@ class PitchParser:
         pitch = re.sub('[\',]', '', pitch)
         return midi % 12 == self.pitchMidiBase[pitch]
 
+    def get_pitch_base(self, pitch):
+        pitch = re.sub('[\',]', '', pitch)
+        return pitch
+
     def get_octave_from_pitch(self, pitch):
         octave = 0
         for i in pitch:
@@ -67,3 +71,10 @@ class PitchParser:
         for pitch in pitchList:
             midiList.append(self.get_midi_from_pitch(pitch))
         return midiList
+
+    def get_midi_base_from_midi(self, midi):
+        return midi % 12
+
+    def get_midi_base_from_pitch(self, pitch):
+        midi = self.get_midi_from_pitch(pitch)
+        return self.get_midi_base_from_midi(midi)

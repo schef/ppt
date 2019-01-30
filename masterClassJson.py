@@ -5,23 +5,26 @@ import json
 import midiPlayer
 import pitchParser
 
-with open('masterclass_05_01.json', 'r') as f:
-    jsonData = json.load(f)
 
-class Practice0501:
-    GROUP = jsonData['group']
-    PRACTICE = jsonData['practice']
-    DESCRIPTION = jsonData['description']
-    UUID = jsonData['uuid']
-    MAX_HITS = jsonData['maxHits']
-    CURRENT_HITS = 0
+
+class Practice:
     player = midiPlayer.MidiPlayer()
     parser = pitchParser.PitchParser()
     hits = 0
     question = []
     anwser = []
 
-    def __init__(self):
+    def __init__(self, jsonFileName):
+        self.jsonFileName = jsonFileName
+        with open(jsonFileName, 'r') as f:
+            self.jsonData = json.load(f)
+        self.GROUP = self.jsonData['group']
+        self.PRACTICE = self.jsonData['practice']
+        self.DESCRIPTION = self.jsonData['description']
+        self.UUID = self.jsonData['uuid']
+        self.MAX_HITS = self.jsonData['maxHits']
+        self.PRACTICE_TYP = self.jsonData['practiceTyp']
+        self.CURRENT_HITS = 0
         self.generateNewChallenge()
 
     def playHarmonicly(self):
@@ -46,7 +49,7 @@ class Practice0501:
         print("showAnwser id " + str(self.id) + ":", self.anwser)
 
     def generateNewChallenge(self):
-        randomPractice = random.choice(jsonData['practiceBatchAuto'])
+        randomPractice = random.choice(self.jsonData['practiceBatch'])
         self.id = randomPractice['id']
         self.question = randomPractice['question']
         self.anwser = randomPractice['anwser']
@@ -93,6 +96,31 @@ class Practice0501:
                 self.playHarmonicly()
             elif (inputString == "q"):
                 break
+            else:
+                if (self.PRACTICE_TYP == "SOLO_KEYBOARD"):
+                    pitches = inputString.split(' ')
+                    if (len(pitches) != len(self.anwser)):
+                        print("Wrong number of pitches", pitches, self.anwser)
+                    else:
+                        guess = True
+                        for i in range(len(pitches)):
+                            if (self.parser.get_midi_base_from_pitch(pitches[i]) != self.parser.get_midi_base_from_pitch(self.anwser[i])):
+                                guess = False
+                        if (guess):
+                            self.hits += 1
+                            print("Good, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
+                            self.generateNewChallenge()
+                            self.playHarmonicly()
+                        else:
+                            self.hits = 0
+                            print("Bad, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
+                            self.playHarmonicly()
+                elif (self.PRACTICE_TYP == "TEAM_PLAYER"):
+                    pass
+                elif (self.PRACTICE_TYP == "MEDITATION"):
+                    pass
+                else:
+                    print("Input not recognized", inputString)                    
 
         print("Finish successfully")
         return (self.hits)

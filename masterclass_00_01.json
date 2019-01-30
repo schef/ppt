@@ -1,0 +1,15 @@
+{
+    "group": "00",
+    "practice": "01",
+    "description": "Example solo keyboard. The practice will play a C major chord and than a black tone. You should guess the black tone.",
+    "uuid": "344683dc-bc7d-4bee-9c6f-21057871a670",
+    "maxHits": 20,
+    "practiceTyp" : "SOLO_KEYBOARD",
+    "practiceBatch" : [
+        {"id" : 0, "question" : [["c'", "e'", "g'"], ["cis'"]], "anwser" : ["cis'"]},
+        {"id" : 1, "question" : [["c'", "e'", "g'"], ["es'"]], "anwser" : ["es'"]},
+        {"id" : 2, "question" : [["c'", "e'", "g'"], ["fis'"]], "anwser" : ["fis'"]},
+        {"id" : 3, "question" : [["c'", "e'", "g'"], ["as'"]], "anwser" : ["as'"]},
+        {"id" : 4, "question" : [["c'", "e'", "g'"], ["b'"]], "anwser" : ["b'"]}
+    ]
+}

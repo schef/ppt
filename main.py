@@ -7,16 +7,10 @@ import colors
 import time
 
 import practiceTest
-import masterClass05Json
-# import masterClass17
+import masterClassJson
 
 practices = [practiceTest.PracticeTest(),
-             masterClass05Json.Practice0501(),
-            #  masterClass17.Practice1701(),
-            #  masterClass17.Practice1702(),
-            #  masterClass17.Practice170301(),
-            #  masterClass17.Practice170302(),
-            #  masterClass17.Practice1704(),
+             masterClassJson.Practice('masterclass_00_01.json')
              ]
 
 nameWidthGroup = 0
