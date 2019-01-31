@@ -1,0 +1,18 @@
+{
+    "group": "00",
+    "practice": "02",
+    "description": "Example pitch identify drill. This practice will play 2 white tones separated by 1. You should sing the lower one.",
+    "uuid": "f186fd58-77f9-4e5d-96de-cf47ce099bfa",
+    "maxHits": 20,
+    "practiceTyp" : "PITCH_IDENTIFY_DRILL",
+    "practiceBatch" : [
+        {"id" : 0, "question" : [["c'", "e'"]], "anwser" : ["c'"]},
+        {"id" : 1, "question" : [["d'", "f'"]], "anwser" : ["d'"]},
+        {"id" : 2, "question" : [["e'", "g'"]], "anwser" : ["e'"]},
+        {"id" : 3, "question" : [["f'", "a'"]], "anwser" : ["f'"]},
+        {"id" : 4, "question" : [["g'", "h'"]], "anwser" : ["g'"]},
+        {"id" : 5, "question" : [["a'", "c''"]], "anwser" : ["a'"]},
+        {"id" : 6, "question" : [["h'", "d''"]], "anwser" : ["h'"]},
+        {"id" : 7, "question" : [["c''", "e''"]], "anwser" : ["c''"]}
+    ]
+}

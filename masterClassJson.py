@@ -38,9 +38,8 @@ class Practice:
             time.sleep(self.player.NOTE_DURATION * len(item))
 
     def playAnwser(self):
-        for item in self.anwser:
-            self.player.playMultipleNotesMelodicly(item)
-            time.sleep(self.player.NOTE_DURATION * len(item))
+        self.player.playMultipleNotesMelodicly(self.anwser)
+        time.sleep(self.player.NOTE_DURATION * len(self.anwser))
 
     def showQuestion(self):
         print("showQuestion id " + str(self.id) + ":", self.question)
@@ -54,9 +53,18 @@ class Practice:
         self.question = randomPractice['question']
         self.anwser = randomPractice['anwser']
 
+    def executeNewChallenge(self):
+            if (self.PRACTICE_TYP == "PITCH_NAMING_DRILL"):
+                self.playHarmonicly()
+            elif (self.PRACTICE_TYP == "PITCH_IDENTIFY_DRILL"):
+                self.playHarmonicly()
+            elif (self.PRACTICE_TYP == "MEDITATION"):
+                self.showQuestion()
+
     def main(self):
 
-        self.playHarmonicly()
+        self.executeNewChallenge()
+
         while self.hits < self.MAX_HITS:
 
             inputString = input("command: ")
@@ -88,16 +96,16 @@ class Practice:
                 self.hits += 1
                 print("Good, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
                 self.generateNewChallenge()
-                self.playHarmonicly()
+                self.executeNewChallenge()
             elif (inputString == "r"):
                 self.hits = 0
                 print("Bad, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
                 self.generateNewChallenge()
-                self.playHarmonicly()
+                self.executeNewChallenge()
             elif (inputString == "q"):
                 break
             else:
-                if (self.PRACTICE_TYP == "SOLO_KEYBOARD"):
+                if (self.PRACTICE_TYP == "PITCH_NAMING_DRILL"):
                     pitches = inputString.split(' ')
                     if (len(pitches) != len(self.anwser)):
                         print("Wrong number of pitches", pitches, self.anwser)
@@ -110,17 +118,15 @@ class Practice:
                             self.hits += 1
                             print("Good, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
                             self.generateNewChallenge()
-                            self.playHarmonicly()
+                            self.executeNewChallenge()
                         else:
                             self.hits = 0
                             print("Bad, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
-                            self.playHarmonicly()
-                elif (self.PRACTICE_TYP == "TEAM_PLAYER"):
-                    pass
+                            self.executeNewChallenge()
+                elif (self.PRACTICE_TYP == "PITCH_IDENTIFY_DRILL"):
+                    print("Input not recognized: <" + inputString + ">, use <pa> to check if you sang wright and <n> for next or <?> for more help.")                    
                 elif (self.PRACTICE_TYP == "MEDITATION"):
                     pass
-                else:
-                    print("Input not recognized", inputString)                    
 
         print("Finish successfully")
-        return (self.hits)
+        return (self.hits)    

@@ -1,0 +1,13 @@
+{
+    "group": "00",
+    "practice": "03",
+    "description": "Example meditation. This practice will give you a tone to sing. Check if you got it right.",
+    "uuid": "c49bc8df-eb31-4dde-8168-1fd0d3bbc769",
+    "maxHits": 20,
+    "practiceTyp" : "MEDITATION",
+    "practiceBatch" : [
+        {"id" : 0, "question" : [["c'"]], "anwser" : ["c'"]},
+        {"id" : 1, "question" : [["d'"]], "anwser" : ["d'"]},
+        {"id" : 2, "question" : [["e'"]], "anwser" : ["e'"]}
+    ]
+}
