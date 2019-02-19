@@ -6,8 +6,8 @@
     "maxHits": 20,
     "practiceTyp" : "MEDITATION",
     "practiceBatch" : [
-        {"id" : 0, "question" : [["c'"]], "anwser" : ["c'"]},
-        {"id" : 1, "question" : [["d'"]], "anwser" : ["d'"]},
-        {"id" : 2, "question" : [["e'"]], "anwser" : ["e'"]}
+        {"id" : 0, "question" : [["c'"]], "anwser" : [["c'"]]},
+        {"id" : 1, "question" : [["d'"]], "anwser" : [["d'"]]},
+        {"id" : 2, "question" : [["e'"]], "anwser" : [["e'"]]}
     ]
 }

@@ -5,7 +5,11 @@ import json
 import midiPlayer
 import pitchParser
 
-
+def recursive_len(item):
+    if type(item) == list:
+        return sum(recursive_len(subitem) for subitem in item)
+    else:
+        return 1
 
 class Practice:
     player = midiPlayer.MidiPlayer()
@@ -54,12 +58,12 @@ class Practice:
         self.anwser = randomPractice['anwser']
 
     def executeNewChallenge(self):
-            if (self.PRACTICE_TYP == "PITCH_NAMING_DRILL"):
-                self.playHarmonicly()
-            elif (self.PRACTICE_TYP == "PITCH_IDENTIFY_DRILL"):
-                self.playHarmonicly()
-            elif (self.PRACTICE_TYP == "MEDITATION"):
-                self.showQuestion()
+        if (self.PRACTICE_TYP == "PITCH_NAMING_DRILL"):
+            self.playHarmonicly()
+        elif (self.PRACTICE_TYP == "PITCH_IDENTIFY_DRILL"):
+            self.playHarmonicly()
+        elif (self.PRACTICE_TYP == "MEDITATION"):
+            self.showQuestion()
 
     def main(self):
 
@@ -68,7 +72,7 @@ class Practice:
         while self.hits < self.MAX_HITS:
 
             inputString = input("command: ")
-            if (inputString == "?"): #help
+            if (inputString == "?"):  # help
                 helpString = " ?: this help message" + "\n"
                 helpString += "pr: play repeat" + "\n"
                 helpString += "pm: play melodicly" + "\n"
@@ -106,27 +110,42 @@ class Practice:
                 break
             else:
                 if (self.PRACTICE_TYP == "PITCH_NAMING_DRILL"):
-                    pitches = inputString.split(' ')
-                    if (len(pitches) != len(self.anwser)):
-                        print("Wrong number of pitches", pitches, self.anwser)
-                    else:
-                        guess = True
-                        for i in range(len(pitches)):
-                            if (self.parser.get_midi_base_from_pitch(pitches[i]) != self.parser.get_midi_base_from_pitch(self.anwser[i])):
-                                guess = False
-                        if (guess):
-                            self.hits += 1
-                            print("Good, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
-                            self.generateNewChallenge()
-                            self.executeNewChallenge()
-                        else:
-                            self.hits = 0
-                            print("Bad, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
-                            self.executeNewChallenge()
+                    self.checkPitchNamingDrill(inputString)
                 elif (self.PRACTICE_TYP == "PITCH_IDENTIFY_DRILL"):
-                    print("Input not recognized: <" + inputString + ">, use <pa> to check if you sang wright and <n> for next or <?> for more help.")                    
+                    self.checkPitchIdentifyDrill(inputString)
                 elif (self.PRACTICE_TYP == "MEDITATION"):
                     pass
 
         print("Finish successfully")
-        return (self.hits)    
+        return (self.hits)
+
+    def checkPitchIdentifyDrill(self, inputString):
+        print("Input not recognized: <" + inputString +
+              ">, use <pa> to check if you sang wright and <n> for next or <?> for more help.")
+
+    def checkPitchNamingDrill(self, inputString):
+        anwserGroup = self.anwser
+        anwserGroupLen = len(anwserGroup)
+        inputGroup = [inputString.split(' ')]
+        if (anwserGroupLen > 1):
+            for i in anwserGroupLen - 1:
+                inputGroup.append(input(">: ").split(' '))
+        if (recursive_len(anwserGroup) != recursive_len(inputGroup)):
+            print("Wrong number of pitches", inputGroup, anwserGroup)
+        else:
+            guess = True
+            for i in range(anwserGroupLen):
+                for y in range(len(anwserGroup[i])):
+                    if (self.parser.get_midi_base_from_pitch(anwserGroup[i][y]) != self.parser.get_midi_base_from_pitch(inputGroup[i][y])):
+                        guess = False
+            if (guess):
+                self.hits += 1
+                print("Good, hits = ", str(self.hits) +
+                      "/" + str(self.MAX_HITS))
+                self.generateNewChallenge()
+                self.executeNewChallenge()
+            else:
+                self.hits = 0
+                print("Bad, hits = ", str(self.hits) +
+                      "/" + str(self.MAX_HITS))
+                self.executeNewChallenge()

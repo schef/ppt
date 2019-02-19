@@ -6,10 +6,10 @@
     "maxHits": 20,
     "practiceTyp" : "PITCH_NAMING_DRILL",
     "practiceBatch" : [
-        {"id" : 0, "question" : [["c'", "e'", "g'"], ["cis'"]], "anwser" : ["cis'"]},
-        {"id" : 1, "question" : [["c'", "e'", "g'"], ["es'"]], "anwser" : ["es'"]},
-        {"id" : 2, "question" : [["c'", "e'", "g'"], ["fis'"]], "anwser" : ["fis'"]},
-        {"id" : 3, "question" : [["c'", "e'", "g'"], ["as'"]], "anwser" : ["as'"]},
-        {"id" : 4, "question" : [["c'", "e'", "g'"], ["b'"]], "anwser" : ["b'"]}
+        {"id" : 0, "question" : [["c'", "e'", "g'"], ["cis'"]], "anwser" : [["cis'"]]},
+        {"id" : 1, "question" : [["c'", "e'", "g'"], ["es'"]], "anwser" : [["es'"]]},
+        {"id" : 2, "question" : [["c'", "e'", "g'"], ["fis'"]], "anwser" : [["fis'"]]},
+        {"id" : 3, "question" : [["c'", "e'", "g'"], ["as'"]], "anwser" : [["as'"]]},
+        {"id" : 4, "question" : [["c'", "e'", "g'"], ["b'"]], "anwser" : [["b'"]]}
     ]
 }
