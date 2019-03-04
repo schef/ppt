@@ -1,9 +1,10 @@
 from threading import Timer
 
-from rtmidi.midiconstants import NOTE_ON, NOTE_OFF, CONTROLLER_CHANGE, ALL_NOTES_OFF
-from rtmidi.midiutil import open_midioutput
+import rtmidi
 
 import pitchParser
+
+CHANNEL = 1
 
 class MidiPlayer():
     NOTE_DURATION = 1
@@ -11,17 +12,17 @@ class MidiPlayer():
     PORT_NAME = "Output"
 
     def __init__(self):
-        self.midiout_notes, self.port_name = open_midioutput(use_virtual=True, client_name=self.CLIENT_NAME,
-                                                             port_name=self.PORT_NAME)
+        self.midi = rtmidi.RtMidiOut()
+        self.midi.openVirtualPort()
         self.pp = pitchParser.PitchParser()
 
     def noteOn(self, note):
         # print("noteOn", note)
-        self.midiout_notes.send_message([NOTE_ON, note, 100])
+        self.midi.sendMessage(rtmidi.MidiMessage.noteOn(CHANNEL, note, 100))
 
     def noteOff(self, note):
         # print("noteOff", note)
-        self.midiout_notes.send_message([NOTE_OFF, note, 0])
+        self.midi.sendMessage(rtmidi.MidiMessage.noteOn(CHANNEL, note, 0))
 
     def playMultipleNotesMelodicly(self, pitchList):
         # print("playMultipleNotesMelodicly", notes)
@@ -41,4 +42,4 @@ class MidiPlayer():
             Timer(self.NOTE_DURATION, self.noteOff, [midi]).start()
 
     def allNotesOff(self):
-        self.midiout_notes.send_message([CONTROLLER_CHANGE, ALL_NOTES_OFF, 0])
+        self.midi.sendMessage(rtmidi.MidiMessage.allNotesOff())
