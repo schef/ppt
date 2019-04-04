@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d5f2e35-3833-4c6c-9c60-3baaef1e5a07" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/ppt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/ppt.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vscode/.ropeproject/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.vscode/.ropeproject/objectdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../midiPlayerRtmidi.py" beforeDir="false" afterPath="$PROJECT_DIR$/../midiPlayerRtmidi.py" afterDir="false" />
-    </list>
+    <list default="true" id="4d5f2e35-3833-4c6c-9c60-3baaef1e5a07" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

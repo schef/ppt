@@ -1,0 +1,105 @@
+{
+    "description" : "Here goes welcome message",
+    "list" : [
+        {
+            "name" : "Master Class 00",
+            "filename" : "masterclass_00.json"
+        },
+        {
+            "name" : "Master Class 01",
+            "filename" : "masterclass_01.json"
+        },
+        {
+            "name" : "Master Class 02",
+            "filename" : "masterclass_02.json"
+        },
+        {
+            "name" : "Master Class 03",
+            "filename" : "masterclass_03.json"
+        },
+        {
+            "name" : "Master Class 04",
+            "filename" : "masterclass_04.json"
+        },
+        {
+            "name" : "Master Class 05",
+            "filename" : "masterclass_05.json"
+        },
+        {
+            "name" : "Master Class 06",
+            "filename" : "masterclass_06.json"
+        },
+        {
+            "name" : "Master Class 07",
+            "filename" : "masterclass_07.json"
+        },
+        {
+            "name" : "Master Class 08",
+            "filename" : "masterclass_08.json"
+        },
+        {
+            "name" : "Master Class 09",
+            "filename" : "masterclass_09.json"
+        },
+        {
+            "name" : "Master Class 10",
+            "filename" : "masterclass_10.json"
+        },
+        {
+            "name" : "Master Class 11",
+            "filename" : "masterclass_11.json"
+        },
+        {
+            "name" : "Master Class 12",
+            "filename" : "masterclass_12.json"
+        },
+        {
+            "name" : "Master Class 13",
+            "filename" : "masterclass_13.json"
+        },
+        {
+            "name" : "Master Class 14",
+            "filename" : "masterclass_14.json"
+        },
+        {
+            "name" : "Master Class 15",
+            "filename" : "masterclass_15.json"
+        },
+        {
+            "name" : "Master Class 16",
+            "filename" : "masterclass_16.json"
+        },
+        {
+            "name" : "Master Class 17",
+            "filename" : "masterclass_17.json"
+        },
+        {
+            "name" : "Master Class 18",
+            "filename" : "masterclass_18.json"
+        },
+        {
+            "name" : "Master Class 19",
+            "filename" : "masterclass_19.json"
+        },
+        {
+            "name" : "Master Class 20",
+            "filename" : "masterclass_20.json"
+        },
+        {
+            "name" : "Master Class 21",
+            "filename" : "masterclass_21.json"
+        },
+        {
+            "name" : "Master Class 22",
+            "filename" : "masterclass_22.json"
+        },
+        {
+            "name" : "Master Class 23",
+            "filename" : "masterclass_23.json"
+        },
+        {
+            "name" : "Master Class 24",
+            "filename" : "masterclass_24.json"
+        }
+    ]
+}
