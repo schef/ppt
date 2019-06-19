@@ -1,0 +1,29 @@
+{
+    "description" : "This masterclass is generic and is holding all sorts of practices available throughout masterclass. It is good for testings.",
+    "list" : [
+        {
+            "name" : "Pitch naming drill test",
+            "filename" : "masterclass_00_01.json"
+        },
+        {
+            "name" : "Pitch naming drill test",
+            "filename" : "masterclass_00_01.json"
+        },
+        {
+            "name" : "Pitch naming drill test 5",
+            "filename" : "masterclass_00_01.json"
+        },
+        {
+            "name" : "Pitch identify drill",
+            "filename" : "masterclass_00_02.json"
+        },
+        {
+            "name" : "Meditation",
+            "filename" : "masterclass_00_03.json"
+        },
+        {
+            "name" : "Audio book player example",
+            "filename" : "masterclass_00_04.json"
+        }
+    ]
+}
