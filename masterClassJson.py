@@ -42,8 +42,9 @@ class Practice:
             time.sleep(self.player.NOTE_DURATION * len(item))
 
     def playAnwser(self):
-        self.player.playMultipleNotesMelodicly(self.anwser)
-        time.sleep(self.player.NOTE_DURATION * len(self.anwser))
+        for item in self.anwser:
+            self.player.playMultipleNotesMelodicly(item)
+            time.sleep(self.player.NOTE_DURATION * len(item))
 
     def showQuestion(self):
         print("showQuestion id " + str(self.id) + ":", self.question)

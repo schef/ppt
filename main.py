@@ -9,10 +9,10 @@ import time
 import practiceTest
 import masterClassJson
 
-practices = [practiceTest.PracticeTest(),
-             masterClassJson.Practice('masterclass_00_01.json'),
-             masterClassJson.Practice('masterclass_00_02.json'),
-             masterClassJson.Practice('masterclass_00_03.json')
+practices = [
+            masterClassJson.Practice('practices/masterclass_00/masterclass_00_01.json'),
+            masterClassJson.Practice('practices/masterclass_00/masterclass_00_02.json'),
+            masterClassJson.Practice('practices/masterclass_00/masterclass_00_03.json'),
              ]
 
 nameWidthGroup = 0
