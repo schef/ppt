@@ -2,15 +2,7 @@
     "description" : "This masterclass is generic and is holding all sorts of practices available throughout masterclass. It is good for testings.",
     "list" : [
         {
-            "name" : "Pitch naming drill test",
-            "filename" : "masterclass_00_01.json"
-        },
-        {
-            "name" : "Pitch naming drill test",
-            "filename" : "masterclass_00_01.json"
-        },
-        {
-            "name" : "Pitch naming drill test 5",
+            "name" : "Pitch naming drill",
             "filename" : "masterclass_00_01.json"
         },
         {
