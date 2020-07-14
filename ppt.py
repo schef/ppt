@@ -3,7 +3,7 @@
 import sys
 import json
 import glob
-import masterClassJson
+from libs import masterClassJson
 
 class bcolors:
     ENDC = '\033[0m'
@@ -48,17 +48,17 @@ def readJsonToDict(FILENAME):
         with open(FILENAME) as json_file:
             data = json.load(json_file)
     except:
-        print("ERROR: Can't open file %s" % (FILENAME))
+        print("%s%sERROR:%s Can't open file %s" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC, FILENAME))
         sys.exit(1)
     return data
 
 
 def getWelcomeMessage():
-    return("%s%s%s" % (bcolors.CBOLD, "===== Welcome =====", bcolors.ENDC))
+    return("%s%s===== Welcome =====%s" % (bcolors.CBOLD, bcolors.CGREEN, bcolors.ENDC))
 
 
 def getEndMessage():
-    return("%s%s%s" % (bcolors.CBOLD, "== Good day sir! ==", bcolors.ENDC))
+    return("%s%s== Good day sir! ==%s" % (bcolors.CBOLD, bcolors.CGREEN, bcolors.ENDC))
 
 
 def getFileNamePath(FILENAME):
@@ -82,14 +82,14 @@ def getMasterClassFileName(data):
     for e,name in enumerate(nameList):
         print("  [%s] %s" % ("{:0>2}".format(e), name))
     try:
-        selection = int(input("Select: "))
+        selection = int(input("%sSELECT:%s " % (bcolors.CBOLD, bcolors.ENDC)))
         name = nameList[selection]
         for line in data["list"]:
             if (name in line["name"]):
                 return line["filename"]
         return None
     except:
-        print("ERROR: Could not parse")
+        print("%s%sERROR:%s Could not parse" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC))
         return None
 
 if __name__ == "__main__":

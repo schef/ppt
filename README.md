@@ -9,7 +9,7 @@ Perfect Pitch Trainer based on David Lucas Burge
 sudo apt-get install python3
 sudo apt-get install python3-pip
 ```
-Install python-rtmidi using pip
+Install python-rtmidi using pip (NOT rtmidi package)
 ```bash
 pip3 install python-rtmidi
 ```
@@ -25,7 +25,7 @@ and then in projects root folder run
 ### Starting
 
 ```bash
-python3 main.py
+python3 ppt.py
 ```
 ### Playback
 
@@ -33,6 +33,4 @@ Use something like Pianoteq and turn on use "listen to all midi ports"
 
 ### Commands
 
-- use `q` to exit practice and program
-- use `?` inside practice to show the right tone
-- use `r` to repet or listen again
+- use `?` to show more help

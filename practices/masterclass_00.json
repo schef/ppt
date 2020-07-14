@@ -1,20 +1,20 @@
 {
-    "description" : "This masterclass is generic and is holding all sorts of practices available throughout masterclass. It is good for testings.",
+    "description" : "This masterclass is for testing only. It does not exists in DLB colection.",
     "list" : [
         {
-            "name" : "Pitch naming drill",
+            "name" : "Pitch naming drill example.",
             "filename" : "masterclass_00_01.json"
         },
         {
-            "name" : "Pitch identify drill",
+            "name" : "Pitch identify drill example.",
             "filename" : "masterclass_00_02.json"
         },
         {
-            "name" : "Meditation",
+            "name" : "Meditation example.",
             "filename" : "masterclass_00_03.json"
         },
         {
-            "name" : "Audio book player example",
+            "name" : "Audio book player example.",
             "filename" : "masterclass_00_04.json"
         }
     ]
