@@ -1,10 +1,14 @@
 {
     "group": "00",
     "practice": "02",
-    "description": "Example pitch identify drill. This practice will play 2 white tones separated by 1. You should sing the lower one.",
+    "description": [
+        "Example pitch identify drill.",
+        "This practice will play 2 white tones separated by 1.",
+        "You should sing the lower one."
+    ],
     "uuid": "f186fd58-77f9-4e5d-96de-cf47ce099bfa",
     "maxHits": 20,
-    "practiceTyp" : "PITCH_IDENTIFY_DRILL",
+    "practiceType" : "PITCH_IDENTIFY_DRILL",
     "practiceBatch" : [
         {"id" : 0, "question" : [["c'", "e'"]], "anwser" : [["c'"]]},
         {"id" : 1, "question" : [["d'", "f'"]], "anwser" : [["d'"]]},

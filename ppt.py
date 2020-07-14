@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
-import sys
-import json
 import glob
-from libs import masterClassJson
+import json
+import sys
+sys.path.insert(0, './libs')
+import masterClassJson
+
 
 class bcolors:
     ENDC = '\033[0m'
@@ -68,43 +70,76 @@ def getFileNamePath(FILENAME):
             return f
     return ""
 
-def getDescription(data):
-    return("%s%s%s" % (bcolors.CITALIC, data["description"].replace(". ", ".\n"), bcolors.ENDC))
 
-def getFileNameList(data):
+def getDescription(data, TAB=""):
+    string = ""
+    for line in data["description"]:
+        string += "%s%s%s%s\n" % (TAB, bcolors.CITALIC, line, bcolors.ENDC)
+    return string[:-1]
+
+
+def getNameList(data):
     nameList = []
-    for name in data["list"]:
+    for name in data["masterclasses"]:
         nameList.append(name["name"])
     return nameList
 
-def getMasterClassFileName(data):
-    nameList = getFileNameList(data)
-    for e,name in enumerate(nameList):
-        print("  [%s] %s" % ("{:0>2}".format(e), name))
+
+def getMasterclassInfoByName(name, data):
+    for line in data["masterclasses"]:
+        if (name in line["name"]):
+            return line
+    return None
+
+
+def selectMasterclass(data):
+    nameList = getNameList(data)
+    for e, name in enumerate(nameList):
+        print("  [%s%s%s] %s" % (bcolors.CVIOLET, "{:0>2}".format(e), bcolors.ENDC, name))
     try:
         selection = int(input("%sSELECT:%s " % (bcolors.CBOLD, bcolors.ENDC)))
         name = nameList[selection]
-        for line in data["list"]:
-            if (name in line["name"]):
-                return line["filename"]
-        return None
+        return getMasterclassInfoByName(name, data)
     except:
         print("%s%sERROR:%s Could not parse" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC))
         return None
+
+
+def selectPractice(data):
+    for filename in data['filenames']:
+        practice = readJsonToDict(getFileNamePath(filename))
+        print("  [%s%s%s]" % (bcolors.CVIOLET, "{:0>2}".format(practice["practice"]), bcolors.ENDC))
+        print(getDescription(practice, "    "))
+    try:
+        selection = int(input("%sSELECT:%s " % (bcolors.CBOLD, bcolors.ENDC)))
+        filename = data['filenames'][selection]
+        return filename
+    except:
+        print("%s%sERROR:%s Could not parse" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC))
+        return None
+
+
+def getPracticeType(data):
+    return data["practiceType"]
+
 
 if __name__ == "__main__":
     print(getWelcomeMessage())
 
     data = readJsonToDict(getFileNamePath("masterclasses.json"))
     print(getDescription(data))
-    filename = getMasterClassFileName(data)
+    masterclass = selectMasterclass(data)
 
-    if (filename):
-        subgroup = readJsonToDict(getFileNamePath(filename))
-        print(getDescription(subgroup))
-        subfilename = getMasterClassFileName(subgroup)
-
-        if (subfilename):
-            masterClassJson.Practice(getFileNamePath(subfilename)).main()
+    if (masterclass):
+        practiceFilename = selectPractice(masterclass)
+        practice = readJsonToDict(getFileNamePath(practiceFilename))
+        if practice["practiceType"] == "PITCH_NAMING_DRILL":
+            masterClassJson.Practice(getFileNamePath(practiceFilename)).main()
+        elif practice["practiceType"] == "PITCH_IDENTIFY_DRILL":
+            masterClassJson.Practice(getFileNamePath(practiceFilename)).main()
+        elif practice["practiceType"] == "MEDITATION":
+            masterClassJson.Practice(getFileNamePath(practiceFilename)).main()
+        else:
+            print("%s%sERROR:%s practiceType %s not implemented" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC, practiceType))
 
     print(getEndMessage())

@@ -1,7 +1,10 @@
 {
     "group": "05",
     "practice": "01",
-    "description": "Any two white tones separated by one. Listen and Sing.",
+    "description": [
+        "Any two white tones separated by one.",
+        "Listen and Sing."
+    ],
     "uuid": "f90c6b33-9238-436d-bbcf-6bdae3a7d1bb",
     "maxHits": 20,
     "pitchListUsed": [

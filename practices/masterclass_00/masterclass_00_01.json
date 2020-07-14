@@ -1,10 +1,14 @@
 {
     "group": "00",
     "practice": "01",
-    "description": "Example pitch naming drill. This practice will play a C major chord and than a black tone. You should name the black tone.",
+    "description": [
+        "Example pitch naming drill.",
+        "This practice will play a C major chord and than a black tone.",
+        "You should name the black tone."
+    ],
     "uuid": "344683dc-bc7d-4bee-9c6f-21057871a670",
     "maxHits": 20,
-    "practiceTyp" : "PITCH_NAMING_DRILL",
+    "practiceType" : "PITCH_NAMING_DRILL",
     "practiceBatch" : [
         {"id" : 0, "question" : [["c'", "e'", "g'"], ["cis'"]], "anwser" : [["cis'"]]},
         {"id" : 1, "question" : [["c'", "e'", "g'"], ["es'"]], "anwser" : [["es'"]]},

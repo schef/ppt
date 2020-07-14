@@ -27,7 +27,7 @@ class Practice:
         self.DESCRIPTION = self.jsonData['description']
         self.UUID = self.jsonData['uuid']
         self.MAX_HITS = self.jsonData['maxHits']
-        self.PRACTICE_TYP = self.jsonData['practiceTyp']
+        self.PRACTICE_TYP = self.jsonData['practiceType']
         self.CURRENT_HITS = 0
         self.generateNewChallenge()
 

@@ -1,9 +1,12 @@
 {
     "group": "00",
     "practice": "04",
-    "description": "Audio book player. Here you will listen to David Lucas Burge audio book.",
+    "description": [
+        "Audio book player.",
+        "Here you will listen to David Lucas Burge audio book."
+    ],
     "uuid": "c49bc8df-eb31-4dde-8168-1fd0d3bbc769",
     "maxHits": 20,
-    "practiceTyp" : "PLAYER",
+    "practiceType" : "PLAYER",
     "filename" : "audiofile.mp3"
 }
