@@ -1,9 +1,13 @@
+#!/usr/bin/env python3
+
 import random
 import time
 import json
 
 import midiPlayer
 import pitchParser
+from common import *
+
 
 def recursive_len(item):
     if type(item) == list:
@@ -11,66 +15,46 @@ def recursive_len(item):
     else:
         return 1
 
-class Practice:
+
+class PracticeBase:
     player = midiPlayer.MidiPlayer()
     parser = pitchParser.PitchParser()
-    hits = 0
-    question = []
-    anwser = []
 
-    def __init__(self, jsonFileName):
-        self.jsonFileName = jsonFileName
-        with open(jsonFileName, 'r') as f:
-            self.jsonData = json.load(f)
-        self.GROUP = self.jsonData['group']
-        self.PRACTICE = self.jsonData['practice']
-        self.DESCRIPTION = self.jsonData['description']
-        self.UUID = self.jsonData['uuid']
-        self.MAX_HITS = self.jsonData['maxHits']
-        self.PRACTICE_TYP = self.jsonData['practiceType']
-        self.CURRENT_HITS = 0
-        self.generateNewChallenge()
-
-    def playHarmonicly(self):
-        for item in self.question:
-            self.player.playMultipleNotesHarmonicly(item)
+    def playHarmonicly(self, noteList):
+        for note in noteList:
+            self.player.playMultipleNotesHarmonicly(note)
             time.sleep(self.player.NOTE_DURATION)
 
-    def playMelodicly(self):
-        for item in self.question:
-            self.player.playMultipleNotesMelodicly(item)
-            time.sleep(self.player.NOTE_DURATION * len(item))
+    def playMelodicly(self, noteList):
+        for note in noteList:
+            self.player.playMultipleNotesMelodicly(note)
+            time.sleep(self.player.NOTE_DURATION * len(note))
 
-    def playAnwser(self):
-        for item in self.anwser:
-            self.player.playMultipleNotesMelodicly(item)
-            time.sleep(self.player.NOTE_DURATION * len(item))
+    def showQuestion(self, challange):
+        print("showQuestion id " + str(challange["id"]) + ":", challange["question"])
 
-    def showQuestion(self):
-        print("showQuestion id " + str(self.id) + ":", self.question)
+    def showAnwser(self, challange):
+        print("showAnwser id " + str(challange["id"]) + ":", challange["anwser"])
 
-    def showAnwser(self):
-        print("showAnwser id " + str(self.id) + ":", self.anwser)
+    def generateNewChallenge(self, practiceBatch):
+        return random.choice(practiceBatch)
 
-    def generateNewChallenge(self):
-        randomPractice = random.choice(self.jsonData['practiceBatch'])
-        self.id = randomPractice['id']
-        self.question = randomPractice['question']
-        self.anwser = randomPractice['anwser']
 
-    def executeNewChallenge(self):
-        if (self.PRACTICE_TYP == "PITCH_NAMING_DRILL"):
-            self.playHarmonicly()
-        elif (self.PRACTICE_TYP == "PITCH_IDENTIFY_DRILL"):
-            self.playHarmonicly()
-        elif (self.PRACTICE_TYP == "MEDITATION"):
-            self.showQuestion()
+class PracticePitchNamingDrill(PracticeBase):
+    def __init__(self, filename):
+        print("PracticePitchNamingDrill")
+        self.practice = readJsonToDict(getFileNamePath(filename))
+
+    def executeNewChallenge(self, noteList):
+        self.playHarmonicly(noteList)
 
     def main(self):
+        print("Practice start")
+        hits = 0
+        challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+        self.executeNewChallenge(challenge["question"])
 
-        self.executeNewChallenge()
-
-        while self.hits < self.MAX_HITS:
+        while hits < self.practice["maxHits"]:
 
             inputString = input("command: ")
             if (inputString == "?"):  # help
@@ -86,67 +70,172 @@ class Practice:
                 helpString += " q: quit" + "\n"
                 print(helpString)
             elif (inputString == "pr"):
-                self.playHarmonicly()
+                self.executeNewChallenge(challenge["question"])
             elif (inputString == "pm"):
-                self.playMelodicly()
+                self.playMelodicly(challenge["question"])
             elif (inputString == "ph"):
-                self.playHarmonicly()
+                self.playHarmonicly(challenge["question"])
             elif (inputString == "pa"):
-                self.playAnwser()
+                self.playMelodicly(challenge["anwser"])
             elif (inputString == "sq"):
-                self.showQuestion()
+                self.showQuestion(challenge)
             elif (inputString == "sa"):
-                self.showAnwser()
+                self.showAnwser(challenge)
             elif (inputString == "n"):
-                self.hits += 1
-                print("Good, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
-                self.generateNewChallenge()
-                self.executeNewChallenge()
+                hits += 1
+                print("Good, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
+                challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+                self.executeNewChallenge(challenge["question"])
             elif (inputString == "r"):
-                self.hits = 0
-                print("Bad, hits = ", str(self.hits) + "/" + str(self.MAX_HITS))
-                self.generateNewChallenge()
-                self.executeNewChallenge()
+                hits = 0
+                print("Bad, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
+                challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+                self.executeNewChallenge(challenge["question"])
             elif (inputString == "q"):
                 break
             else:
-                if (self.PRACTICE_TYP == "PITCH_NAMING_DRILL"):
-                    self.checkPitchNamingDrill(inputString)
-                elif (self.PRACTICE_TYP == "PITCH_IDENTIFY_DRILL"):
-                    self.checkPitchIdentifyDrill(inputString)
-                elif (self.PRACTICE_TYP == "MEDITATION"):
-                    pass
+                anwserGroup = challenge["anwser"]
+                anwserGroupLen = len(anwserGroup)
+                inputGroup = [inputString.split(' ')]
+                if (anwserGroupLen > 1):
+                    for i in anwserGroupLen - 1:
+                        inputGroup.append(input(">: ").split(' '))
+                if (recursive_len(anwserGroup) != recursive_len(inputGroup)):
+                    print("Wrong number of pitches", inputGroup, anwserGroup)
+                else:
+                    guess = True
+                    for i in range(anwserGroupLen):
+                        for y in range(len(anwserGroup[i])):
+                            if (self.parser.get_midi_base_from_pitch(anwserGroup[i][y]) != self.parser.get_midi_base_from_pitch(inputGroup[i][y])):
+                                guess = False
+                    if (guess):
+                        hits += 1
+                        print("Good, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
+                        challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+                        self.executeNewChallenge(challenge["question"])
+                    else:
+                        hits = 0
+                        print("Bad, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
+                        self.executeNewChallenge(challenge["question"])
 
-        print("Finish successfully")
-        return (self.hits)
+        print("Practice end")
+        return (hits)
 
-    def checkPitchIdentifyDrill(self, inputString):
-        print("Input not recognized: <" + inputString +
-              ">, use <pa> to check if you sang wright and <n> for next or <?> for more help.")
 
-    def checkPitchNamingDrill(self, inputString):
-        anwserGroup = self.anwser
-        anwserGroupLen = len(anwserGroup)
-        inputGroup = [inputString.split(' ')]
-        if (anwserGroupLen > 1):
-            for i in anwserGroupLen - 1:
-                inputGroup.append(input(">: ").split(' '))
-        if (recursive_len(anwserGroup) != recursive_len(inputGroup)):
-            print("Wrong number of pitches", inputGroup, anwserGroup)
-        else:
-            guess = True
-            for i in range(anwserGroupLen):
-                for y in range(len(anwserGroup[i])):
-                    if (self.parser.get_midi_base_from_pitch(anwserGroup[i][y]) != self.parser.get_midi_base_from_pitch(inputGroup[i][y])):
-                        guess = False
-            if (guess):
-                self.hits += 1
-                print("Good, hits = ", str(self.hits) +
-                      "/" + str(self.MAX_HITS))
-                self.generateNewChallenge()
-                self.executeNewChallenge()
+class PracticePitchIdentifyDrill(PracticeBase):
+    def __init__(self, filename):
+        print("PracticePitchIdentifyDrill")
+        self.practice = readJsonToDict(getFileNamePath(filename))
+
+    def executeNewChallenge(self, noteList):
+        self.playHarmonicly(noteList)
+
+    def main(self):
+        print("Practice start")
+        hits = 0
+        challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+        self.executeNewChallenge(challenge["question"])
+
+        while hits < self.practice["maxHits"]:
+
+            inputString = input("command: ")
+            if (inputString == "?"):  # help
+                helpString = " ?: this help message" + "\n"
+                helpString += "pr: play repeat" + "\n"
+                helpString += "pm: play melodicly" + "\n"
+                helpString += "ph: play harmonicly" + "\n"
+                helpString += "pa: play anwser" + "\n"
+                helpString += "sq: show question" + "\n"
+                helpString += "sa: show anwser" + "\n"
+                helpString += " n: next" + "\n"
+                helpString += " r: reset session" + "\n"
+                helpString += " q: quit" + "\n"
+                print(helpString)
+            elif (inputString == "pr"):
+                self.executeNewChallenge(challenge["question"])
+            elif (inputString == "pm"):
+                self.playMelodicly(challenge["question"])
+            elif (inputString == "ph"):
+                self.playHarmonicly(challenge["question"])
+            elif (inputString == "pa"):
+                self.playMelodicly(challenge["anwser"])
+            elif (inputString == "sq"):
+                self.showQuestion(challenge)
+            elif (inputString == "sa"):
+                self.showAnwser(challenge)
+            elif (inputString == "n"):
+                hits += 1
+                print("Good, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
+                challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+                self.executeNewChallenge(challenge["question"])
+            elif (inputString == "r"):
+                hits = 0
+                print("Bad, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
+                challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+                self.executeNewChallenge(challenge["question"])
+            elif (inputString == "q"):
+                break
             else:
-                self.hits = 0
-                print("Bad, hits = ", str(self.hits) +
-                      "/" + str(self.MAX_HITS))
-                self.executeNewChallenge()
+                print("Input not recognized: <" + inputString +
+                    ">, use <pa> to check if you sang wright and <n> for next or <?> for more help.")
+
+        print("Practice end")
+        return (hits)
+
+
+class PracticeMeditation(PracticeBase):
+    def __init__(self, filename):
+        print("PracticeMeditation")
+        self.practice = readJsonToDict(getFileNamePath(filename))
+
+    def executeNewChallenge(self, noteList):
+        self.showQuestion(noteList)
+
+    def main(self):
+        print("Practice start")
+        hits = 0
+        challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+        self.executeNewChallenge(challenge["question"])
+
+        while hits < self.practice["maxHits"]:
+
+            inputString = input("command: ")
+            if (inputString == "?"):  # help
+                helpString = " ?: this help message" + "\n"
+                helpString += "pr: play repeat" + "\n"
+                helpString += "pm: play melodicly" + "\n"
+                helpString += "ph: play harmonicly" + "\n"
+                helpString += "pa: play anwser" + "\n"
+                helpString += "sq: show question" + "\n"
+                helpString += "sa: show anwser" + "\n"
+                helpString += " n: next" + "\n"
+                helpString += " r: reset session" + "\n"
+                helpString += " q: quit" + "\n"
+                print(helpString)
+            elif (inputString == "pr"):
+                self.executeNewChallenge(challenge["question"])
+            elif (inputString == "pm"):
+                self.playMelodicly(challenge["question"])
+            elif (inputString == "ph"):
+                self.playHarmonicly(challenge["question"])
+            elif (inputString == "pa"):
+                self.playMelodicly(challenge["anwser"])
+            elif (inputString == "sq"):
+                self.showQuestion(challenge)
+            elif (inputString == "sa"):
+                self.showAnwser(challenge)
+            elif (inputString == "n"):
+                hits += 1
+                print("Good, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
+                challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+                self.executeNewChallenge(challenge["question"])
+            elif (inputString == "r"):
+                hits = 0
+                print("Bad, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
+                challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+                self.executeNewChallenge(challenge["question"])
+            elif (inputString == "q"):
+                break
+
+        print("Practice end")
+        return (hits)
