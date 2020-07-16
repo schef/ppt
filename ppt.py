@@ -41,8 +41,10 @@ def selectMasterclass(data):
         print(getDescription(getMasterclassInfoByName(name, data), "    "))
     try:
         selection = int(input("%sSELECT:%s " % (bcolors.CBOLD, bcolors.ENDC)))
-        name = nameList[selection]
-        return getMasterclassInfoByName(name, data)
+        if selection in range(len(nameList)):
+            name = nameList[selection]
+            return getMasterclassInfoByName(name, data)
+        print("%s%sERROR:%s Masterclass not found" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC))
     except:
         print("%s%sERROR:%s Could not parse" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC))
         return None
@@ -54,9 +56,13 @@ def selectPractice(data):
         print("  [%s%s%s]" % (bcolors.CVIOLET, "{:0>2}".format(practice["practice"]), bcolors.ENDC))
         print(getDescription(practice, "    "))
     try:
-        selection = int(input("%sSELECT:%s " % (bcolors.CBOLD, bcolors.ENDC)))
-        filename = data['filenames'][selection]
-        return filename
+        id = input("%sSELECT:%s " % (bcolors.CBOLD, bcolors.ENDC))
+        for filename in data['filenames']:
+            practice = readJsonToDict(getFileNamePath(filename))
+            if int(id) == int(practice["practice"]):
+                return filename
+        print("%s%sERROR:%s Practice not found" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC))
+        return None
     except:
         print("%s%sERROR:%s Could not parse" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC))
         return None
@@ -75,14 +81,15 @@ if __name__ == "__main__":
 
     if (masterclass):
         practiceFilename = selectPractice(masterclass)
-        practice = readJsonToDict(getFileNamePath(practiceFilename))
-        if practice["practiceType"] == "PITCH_NAMING_DRILL":
-            masterClassJson.PracticePitchNamingDrill(getFileNamePath(practiceFilename)).main()
-        elif practice["practiceType"] == "PITCH_IDENTIFY_DRILL":
-            masterClassJson.PracticePitchIdentifyDrill(getFileNamePath(practiceFilename)).main()
-        elif practice["practiceType"] == "MEDITATION":
-            masterClassJson.PracticeMeditation(getFileNamePath(practiceFilename)).main()
-        else:
-            print("%s%sERROR:%s practiceType %s not implemented" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC, practiceType))
+        if (practiceFilename):
+            practice = readJsonToDict(getFileNamePath(practiceFilename))
+            if practice["practiceType"] == "PITCH_NAMING_DRILL":
+                masterClassJson.PracticePitchNamingDrill(getFileNamePath(practiceFilename)).main()
+            elif practice["practiceType"] == "PITCH_IDENTIFY_DRILL":
+                masterClassJson.PracticePitchIdentifyDrill(getFileNamePath(practiceFilename)).main()
+            elif practice["practiceType"] == "MEDITATION":
+                masterClassJson.PracticeMeditation(getFileNamePath(practiceFilename)).main()
+            else:
+                print("%s%sERROR:%s practiceType %s not implemented" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC, practiceType))
 
     print(getEndMessage())

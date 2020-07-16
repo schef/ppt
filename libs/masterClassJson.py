@@ -56,7 +56,7 @@ class PracticePitchNamingDrill(PracticeBase):
 
         while hits < self.practice["maxHits"]:
 
-            inputString = input("command: ")
+            inputString = input("%sINPUT:%s " % (bcolors.CBOLD, bcolors.ENDC))
             if (inputString == "?"):  # help
                 helpString = " ?: this help message" + "\n"
                 helpString += "pr: play repeat" + "\n"
@@ -94,29 +94,32 @@ class PracticePitchNamingDrill(PracticeBase):
             elif (inputString == "q"):
                 break
             else:
-                anwserGroup = challenge["anwser"]
-                anwserGroupLen = len(anwserGroup)
-                inputGroup = [inputString.split(' ')]
-                if (anwserGroupLen > 1):
-                    for i in anwserGroupLen - 1:
-                        inputGroup.append(input(">: ").split(' '))
-                if (recursive_len(anwserGroup) != recursive_len(inputGroup)):
-                    print("Wrong number of pitches", inputGroup, anwserGroup)
-                else:
-                    guess = True
-                    for i in range(anwserGroupLen):
-                        for y in range(len(anwserGroup[i])):
-                            if (self.parser.get_midi_base_from_pitch(anwserGroup[i][y]) != self.parser.get_midi_base_from_pitch(inputGroup[i][y])):
-                                guess = False
-                    if (guess):
-                        hits += 1
-                        print("Good, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
-                        challenge = self.generateNewChallenge(self.practice["practiceBatch"])
-                        self.executeNewChallenge(challenge["question"])
+                try:
+                    anwserGroup = challenge["anwser"]
+                    anwserGroupLen = len(anwserGroup)
+                    inputGroup = [inputString.split(' ')]
+                    if (anwserGroupLen > 1):
+                        for i in anwserGroupLen - 1:
+                            inputGroup.append(input(">: ").split(' '))
+                    if (recursive_len(anwserGroup) != recursive_len(inputGroup)):
+                        print("Wrong number of pitches", inputGroup, anwserGroup)
                     else:
-                        hits = 0
-                        print("Bad, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
-                        self.executeNewChallenge(challenge["question"])
+                        guess = True
+                        for i in range(anwserGroupLen):
+                            for y in range(len(anwserGroup[i])):
+                                if (self.parser.get_midi_base_from_pitch(anwserGroup[i][y]) != self.parser.get_midi_base_from_pitch(inputGroup[i][y])):
+                                    guess = False
+                        if (guess):
+                            hits += 1
+                            print("Good, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
+                            challenge = self.generateNewChallenge(self.practice["practiceBatch"])
+                            self.executeNewChallenge(challenge["question"])
+                        else:
+                            hits = 0
+                            print("Bad, hits = ", str(hits) + "/" + str(self.practice["maxHits"]))
+                            self.executeNewChallenge(challenge["question"])
+                except:
+                    print("Could not parse")
 
         print("Practice end")
         return (hits)
