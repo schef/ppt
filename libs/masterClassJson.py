@@ -4,9 +4,9 @@ import random
 import time
 import json
 
-import midiPlayer
-import pitchParser
-from common import *
+from libs import midiPlayer
+from libs import pitchParser
+from libs.common import *
 
 
 def recursive_len(item):
@@ -42,7 +42,6 @@ class PracticeBase:
 
 class PracticePitchNamingDrill(PracticeBase):
     def __init__(self, filename):
-        print("PracticePitchNamingDrill")
         self.practice = readJsonToDict(getFileNamePath(filename))
 
     def executeNewChallenge(self, noteList):
@@ -141,7 +140,7 @@ class PracticePitchIdentifyDrill(PracticeBase):
 
         while hits < self.practice["maxHits"]:
 
-            inputString = input("command: ")
+            inputString = input("%sINPUT:%s " % (bcolors.CBOLD, bcolors.ENDC))
             if (inputString == "?"):  # help
                 helpString = " ?: this help message" + "\n"
                 helpString += "pr: play repeat" + "\n"
@@ -202,7 +201,7 @@ class PracticeMeditation(PracticeBase):
 
         while hits < self.practice["maxHits"]:
 
-            inputString = input("command: ")
+            inputString = input("%sINPUT:%s " % (bcolors.CBOLD, bcolors.ENDC))
             if (inputString == "?"):  # help
                 helpString = " ?: this help message" + "\n"
                 helpString += "pr: play repeat" + "\n"

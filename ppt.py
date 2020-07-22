@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 import sys
-sys.path.insert(0, './libs')
-import masterClassJson
-from common import *
+from libs import masterClassJson
+from libs.common import *
 
 def getWelcomeMessage():
     return("%s%s===== Welcome =====%s" % (bcolors.CBOLD, bcolors.CGREEN, bcolors.ENDC))
@@ -90,6 +89,6 @@ if __name__ == "__main__":
             elif practice["practiceType"] == "MEDITATION":
                 masterClassJson.PracticeMeditation(getFileNamePath(practiceFilename)).main()
             else:
-                print("%s%sERROR:%s practiceType %s not implemented" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC, practiceType))
+                print("%s%sERROR:%s practiceType %s not implemented" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC, practice["practiceType"]))
 
     print(getEndMessage())

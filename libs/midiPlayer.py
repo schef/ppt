@@ -1,7 +1,7 @@
 from threading import Timer
 
 import rtmidi
-import pitchParser
+from libs import pitchParser
 
 CHANNEL = 0x90
 

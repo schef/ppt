@@ -7,45 +7,12 @@
     ],
     "uuid": "f90c6b33-9238-436d-bbcf-6bdae3a7d1bb",
     "maxHits": 20,
-    "pitchListUsed": [
-        "c,",
-        "d,",
-        "e,",
-        "f,",
-        "g,",
-        "a,",
-        "h,",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "a",
-        "h",
-        "c'",
-        "d'",
-        "e'",
-        "f'",
-        "g'",
-        "a'",
-        "h'",
-        "c''",
-        "d''",
-        "e''",
-        "f''",
-        "g''",
-        "a''",
-        "h''",
-        "c'''"
-    ],
-    "practiceBatchAuto" : [
+    "practiceType" : "PITCH_IDENTIFY_DRILL",
+    "practiceBatch" : [
         {"id" : 0, "question" : [["c'", "e'"]], "anwser" : [["c'"]]},
         {"id" : 1, "question" : [["c'", "e'"], ["d'", "f'"], ["e'", "g'"]], "anwser" : [["c'"]]},
         {"id" : 2, "question" : [["c'", "e'"], ["c'"]], "anwser" : [["c'"]]},
         {"id" : 3, "question" : [["c'"]], "anwser" : [["c'"]]},
         {"id" : 4, "question" : [["c'", "e'"]], "anwser" : [["c'"]]}
-    ],
-    "practiceBatchManual" : [
-        {"id" : 1000, "question" : [["c'", "e'"]], "anwser" : [["c'"]]}
     ]
 }
