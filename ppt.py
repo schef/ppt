@@ -75,20 +75,27 @@ if __name__ == "__main__":
     print(getWelcomeMessage())
 
     data = readJsonToDict(getFileNamePath("masterclasses.json"))
-    print(getDescription(data))
-    masterclass = selectMasterclass(data)
 
-    if (masterclass):
-        practiceFilename = selectPractice(masterclass)
-        if (practiceFilename):
-            practice = readJsonToDict(getFileNamePath(practiceFilename))
-            if practice["practiceType"] == "PITCH_NAMING_DRILL":
-                masterClassJson.PracticePitchNamingDrill(getFileNamePath(practiceFilename)).main()
-            elif practice["practiceType"] == "PITCH_IDENTIFY_DRILL":
-                masterClassJson.PracticePitchIdentifyDrill(getFileNamePath(practiceFilename)).main()
-            elif practice["practiceType"] == "MEDITATION":
-                masterClassJson.PracticeMeditation(getFileNamePath(practiceFilename)).main()
-            else:
-                print("%s%sERROR:%s practiceType %s not implemented" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC, practice["practiceType"]))
+    try:
+        while True:
+            print(getDescription(data))
+            masterclass = selectMasterclass(data)
+
+            if (masterclass):
+                practiceFilename = selectPractice(masterclass)
+                if (practiceFilename):
+                    practice = readJsonToDict(getFileNamePath(practiceFilename))
+                    if practice["practiceType"] == "PITCH_NAMING_DRILL":
+                        masterClassJson.PracticePitchNamingDrill(getFileNamePath(practiceFilename)).main()
+                    elif practice["practiceType"] == "PITCH_IDENTIFY_DRILL":
+                        masterClassJson.PracticePitchIdentifyDrill(getFileNamePath(practiceFilename)).main()
+                    elif practice["practiceType"] == "MEDITATION":
+                        masterClassJson.PracticeMeditation(getFileNamePath(practiceFilename)).main()
+                    elif practice["practiceType"] == "COMMENTS":
+                        masterClassJson.PracticeComments(getFileNamePath(practiceFilename)).main()
+                    else:
+                        print("%s%sERROR:%s practiceType %s not implemented" % (bcolors.CBOLD, bcolors.CRED, bcolors.ENDC, practice["practiceType"]))
+    except KeyboardInterrupt:
+        pass
 
     print(getEndMessage())

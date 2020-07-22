@@ -241,3 +241,12 @@ class PracticeMeditation(PracticeBase):
 
         print("Practice end")
         return (hits)
+
+class PracticeComments():
+    def __init__(self, filename):
+        self.practice = readJsonToDict(getFileNamePath(filename))
+
+    def main(self):
+        for line in self.practice["text"]:
+            print("%s%s%s%s" % ("  ", bcolors.CITALIC, line, bcolors.ENDC))
+        input("Press any key to return")
